@@ -1,0 +1,22 @@
+{
+	"name": "skitweet",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"start": "node app"
+	},
+	"dependencies": {
+		"express": "3.0.0rc4",
+		"jade": "*",
+		"mongodb": "*",
+		"mongoose": "*"
+	},
+	"description": "ERROR: No README.md file found!",
+	"main": "app.js",
+	"repository": {
+		"type": "git",
+		"url": "."
+	},
+	"author": "Ty Alexander <ty.alexander@colorado.edu>",
+	"license": "BSD"
+}

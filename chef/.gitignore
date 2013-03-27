@@ -1,0 +1,4 @@
+.chef
+.vagrant
+.rake_test_cache
+

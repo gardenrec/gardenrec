@@ -2,7 +2,7 @@
 // FUNCTIONS
 // #####################################################################################################################
 
-var users = [
+exports.users = [
     {
         name: "@alexandt",
         tid: "alexandt",
@@ -14,16 +14,15 @@ var users = [
         image: "joslin.jpg"
     }];
 
-var listings = [
+exports.listings = [
     {
         owner: "jossslin",
-        localtion: "denver"
-        cost: "300",
-        date: "()"
+        localtion: "denver",
+        flower: "rose",
     }
 ]
 
-var exports.populateDB = function(db, data, collection, next) {
+exports.populateDB = function(db, data, collection, next) {
     db.collection(collection, function(err, collection) {
         collection.insert(data, {safe:true}, function(err, result) {
             console.log('Done loading mock data.')

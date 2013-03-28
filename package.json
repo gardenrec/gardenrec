@@ -1,5 +1,5 @@
 {
-	"name": "skitweet",
+	"name": "gardenrec",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
@@ -18,5 +18,5 @@
 		"url": "."
 	},
 	"author": "Ty Alexander <ty.alexander@colorado.edu>",
-	"license": "BSD"
+	"license": "private"
 }

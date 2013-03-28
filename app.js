@@ -18,7 +18,7 @@ app.configure(function() {
     app.set('views', __dirname + '/views');
     app.set('view engine', 'jade');
 
-	app.use(express.favicon(__dirname + '/favicon.ico'));
+    app.use(express.favicon(__dirname + '/favicon.ico'));
     app.use(express.logger('dev'));
     app.use(express.bodyParser());
     app.use(express.methodOverride());
@@ -37,7 +37,8 @@ app.configure('development', function() {
 });
 
 // HOME
-app.get(   '/',          home.index);
+app.get(   '/',           home.index);
+app.get(   '/index.html', home.index);
 
 // USER
 app.post(  '/users/',    user.create);
@@ -49,7 +50,7 @@ app.delete('/users/:id', user.delete);
 
 // LISTING
 app.post(  '/listings/',    listing.create);
-app.get(   '/lintings',     listing.list);
+app.get(   '/listings',     listing.list);
 app.get(   '/listings/:id', listing.get);
 app.put(   '/listings/:id', listing.update);
 app.delete('/listings/:id', listing.delete);

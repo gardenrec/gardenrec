@@ -1,39 +1,16 @@
-var mongo  = require('mongodb');
-var	Server = mongo.Server,
+var mongo  = require('mongodb'),
+    dataUtils = require('../utils/data'),
+    errorUtils = require('../utils/errors');
+
+var Server = mongo.Server,
     Db     = mongo.Db,
     BSON   = mongo.BSONPure;
 
 
 // #####################################################################################################################
-// UTILITY FUNCTIONS
-// #####################################################################################################################
-
-
-var populateDB = function() {
-    var entities = [
-        {
-            name: "Ty Alexander",
-            twitter: "@alexandt",
-            picture: "ty.jpg"
-        },
-        {
-            name: "Joslin Alexander",
-            twitter: "@jossssslin",
-            picture: "joslin.jpg"
-        }];
-
-    db.collection(config.collectionName, function(err, collection) {
-        collection.insert(entities, {safe:true}, function(err, result) {
-            console.log('Done laoding mock data.')
-        });
-    });
-};
-
-
-// #####################################################################################################################
 // MONGO SETUP
 // #####################################################################################################################
-var config = {db:"skitweet", collectionName:'users'};
+var config = {db:"gardenrec", collectionName:'listings'};
 var master = new Server('localhost', 27017, {auto_reconnect: true});
 db = new Db(config.db, master, {safe: true});
 db.open(function(err, db) {
@@ -42,7 +19,7 @@ db.open(function(err, db) {
         db.collection(config.collectionName, {safe: true}, function(err, collection) {
             if (err) {
                 console.log(config.collectionName + " collection does not exist.  Inserting sample data")
-                populateDB();
+                dataUtils.populateDB(db, dataUtils.listings, config.collectionName)
             }
         });
     }
@@ -57,7 +34,7 @@ exports.create = function(req, res) {
     db.collection(config.collectionName, function(err, collection) {
         collection.insert(entity, {safe: true}, function(err, result) {
             if (err) {
-                http500(res, {'error':'Failed to create ' + config.collectionName})
+                errorUtils.http500(res, {'error':'Failed to create ' + config.collectionName})
             } else {
                 console.log('Success: ' + JSON.stringify(result[0]));
                 res.send(result[0]);
@@ -71,7 +48,7 @@ exports.list = function(req, res) {
     db.collection(config.collectionName, function(err, collection) {
         collection.find().toArray(function(eror, items) {
             if (err) {
-                http500(res, {'error':'Failed to list ' + config.collectionName})
+                errorUtils.http500(res, {'error':'Failed to list ' + config.collectionName})
             } else {
                 res.send(items);
             }
@@ -85,7 +62,7 @@ exports.get = function(req, res) {
     db.collection(config.collectionName, function(err, collection) {
         collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
             if (err) {
-                http500(res, {'error':'Failed to get' + config.collectionName + ': ' + id})
+                errorUtils.http500(res, {'error':'Failed to get' + config.collectionName + ': ' + id})
             } else {
                 res.send(item);
             }
@@ -102,7 +79,7 @@ exports.update = function(req, res) {
     db.collection(config.collectionName, function(err, collection) {
         collection.update({'_id':new BSON.ObjectID(id)}, entity, {safe:true}, function(err, result) {
             if (err) {
-                http500(res, {'error':'Failed to update ' + config.collectionName + ': ' + id})
+                errorUtils.http500(res, {'error':'Failed to update ' + config.collectionName + ': ' + id})
             } else {
                 console.log('' + result + ' updated '+ config.collectionName);
                 res.send(entity);
@@ -117,7 +94,7 @@ exports.delete = function(req, res) {
     db.collection(config.collectionName, function(err, collection) {
         collection.remove({'_id':new BSON.ObjectID(id)}, {safe:true}, function(err, result) {
             if (err) {
-                http500(res, {'error':'Failed to delete' + config.collectionName + ': ' + id})
+                errorUtils.http500(res, {'error':'Failed to delete' + config.collectionName + ': ' + id})
             } else {
                 console.log('' + result + ' document(s) deleted');
                 res.send(req.body);

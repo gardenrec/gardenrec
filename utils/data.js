@@ -14,7 +14,7 @@ exports.users = [
         image: "joslin.jpg"
     }];
 
-exports.listings = [
+exports.profiles = [
     {
         owner: "jossslin",
         localtion: "denver",

@@ -10,7 +10,7 @@ var Server = mongo.Server,
 // #####################################################################################################################
 // MONGO SETUP
 // #####################################################################################################################
-var config = {db:"gardenrec", collectionName:'listings'};
+var config = {db:"gardenrec", collectionName:'profiles'};
 var master = new Server('localhost', 27017, {auto_reconnect: true});
 db = new Db(config.db, master, {safe: true});
 db.open(function(err, db) {
@@ -19,7 +19,7 @@ db.open(function(err, db) {
         db.collection(config.collectionName, {safe: true}, function(err, collection) {
             if (err) {
                 console.log(config.collectionName + " collection does not exist.  Inserting sample data")
-                dataUtils.populateDB(db, dataUtils.listings, config.collectionName)
+                dataUtils.populateDB(db, dataUtils.profiles, config.collectionName)
             }
         });
     }

@@ -6,7 +6,7 @@
 var express = require('express'),
     home    = require('./routes/index'),
     user    = require('./routes/user'),
-    listing = require('./routes/listing'),
+    profile = require('./routes/profile'),
     http    = require('http'),
     path    = require('path');
 
@@ -48,12 +48,12 @@ app.put(   '/users/:id', user.update);
 app.delete('/users/:id', user.delete);
 
 
-// LISTING
-app.post(  '/listings/',    listing.create);
-app.get(   '/listings',     listing.list);
-app.get(   '/listings/:id', listing.get);
-app.put(   '/listings/:id', listing.update);
-app.delete('/listings/:id', listing.delete);
+// PROFILE
+app.post(  '/profiles/',    profile.create);
+app.get(   '/profiles',     profile.list);
+app.get(   '/profiles/:id', profile.get);
+app.put(   '/profiles/:id', profile.update);
+app.delete('/profiles/:id', profile.delete);
 
 http.createServer(app).listen(app.get('port'), function() {
     console.log("Express server listening on port " + app.get('port'));
